@@ -65,4 +65,13 @@ body {
   color: #606266 ;
   margin-left: 10px;
 }
+.el-table thead tr th{
+  color: #fff;
+  background: #3c6291;
+  text-align: center;
+  padding: 10px 0;
+}
+.el-table td, .el-table th {
+  padding: 5px 0 !important;
+}
 

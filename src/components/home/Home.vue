@@ -13,11 +13,13 @@
               <div style="width: 90px;text-align: left;">{{item.name}}</div>
               <div :class="[item.isopen ? 'el-icon-arrow-down':'el-icon-arrow-right']"></div>
             </div>
-            <transition name="fade">
-              <div class="menuItem" :class="[item.isopen ? '':'hide']" v-if="item.hasChild">
+            <!-- <transition name="fade"> -->
+            <el-collapse-transition>
+              <div class="menuItem" :class="[item.isopen ? '':'hide']" v-show="item.hasChild">
                 <div class="item" :class="[checkSelected(index,index1) ? 'selected' : '']" v-for="(item1,index1) in item.children" :key="index1" @click="routeJump(item1.route,index,index1)">{{item1.name}}</div>
               </div>
-            </transition>
+            </el-collapse-transition>
+            <!-- </transition> -->
 
           </div>
         </div>
@@ -160,7 +162,6 @@
   .menu {
     width: 190px;
     background: rgba(255,255,255,0.2);
-
     border-bottom: 1px solid #e1e5e6;
     /* border-bottom: 2px solid #fff;
     border-right: 2px solid #fff;
@@ -218,4 +219,7 @@
     box-shadow:0px 2px 4px 4px rgba(0,0,0,0.04);
   }
   ::-webkit-scrollbar {display:none}
+  /* .menuItem {
+    transition: all 1s;
+  } */
 </style>

@@ -14,6 +14,9 @@ import '@/assets/index.css'
 import ElementUI from 'element-ui'
 // 导入elementui - css
 import 'element-ui/lib/theme-chalk/index.css'
+import 'element-ui/lib/theme-chalk/base.css';
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
+Vue.component(CollapseTransition.name, CollapseTransition)
 // 配置公共路径
 // 配置好公共路径后, 每次使用 axios 发送请求, 只需要写当前接口的路径(比如: /users) 就可以了
 // axios 在发送请求之前, 会将 baseUrl + '/users' 得到完整路径, 才会发送请求

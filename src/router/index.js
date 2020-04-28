@@ -48,7 +48,7 @@ const router = new Router({
 // 因为所有的路由，都会经过该导航守卫，所以，就可以在这个导航守卫的回调函数中
 // 判断有没有登录了
 router.beforeEach((to, from, next) => {
-  // console.log(to.path)
+  console.log(to.path)
   if(to.path == '/home/bookingSpace/insertSpace') {
     // console.log('订舱录入')
     // bus.$emit('breadcrumb',['订舱管理','订舱录入'])
@@ -57,6 +57,9 @@ router.beforeEach((to, from, next) => {
   }else if(to.path == '/home/commerce/insertCommerce') {
     localStorage.setItem('breadcrumb0','商务管理')
     localStorage.setItem('breadcrumb1','商务录入')
+  }else if(to.path == '/home') {
+    localStorage.setItem('breadcrumb0','首页')
+    localStorage.setItem('breadcrumb1','')
   }
   
   next()

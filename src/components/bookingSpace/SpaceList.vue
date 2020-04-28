@@ -23,6 +23,18 @@
                 <input type="text" class="searchInput">
             </el-col>
         </el-row>
+        <div class="row2">
+            <div class="block">
+                <span>选择录入日期：</span>
+                <!-- <input type="date" class="searchInput"> -->
+                <el-date-picker v-model="date1" type="date" placeholder="选择日期" style="width:150px"></el-date-picker>
+            </div>
+            <div class="block">
+                <span>选择日期：</span>
+                <el-date-picker v-model="date2" type="date" placeholder="选择日期" style="width:150px"></el-date-picker>
+            </div>
+            <div class="searchBtn">搜索</div>
+        </div>
     </div>
 
 
@@ -219,6 +231,8 @@
 export default {
     data() {
         return {
+            date1: '',
+            date2: '',
             bookEditData: {
                 id: '-1',
                 bookingClerk: '',
@@ -457,6 +471,7 @@ export default {
     .condition {
         color: #333;
         font-size: 12px;
+        margin-left: 20px;
         width: 60px;
         min-width: 60px;
     }
@@ -480,7 +495,8 @@ export default {
     .pagination {
         float: right;
         margin-right: 40px;
-        margin-top: 40px
+        margin-top: 40px;
+        padding-bottom: 90px;
     }
     .tr .deal {
         display: flex;
@@ -512,4 +528,34 @@ export default {
     .el-form-item .el-form-item {
         margin-bottom: 20px;
     }
+    .row2 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: #333;
+        font-size: 12px;
+    }
+    .row2 .block {
+        margin-left: 20px;
+    }
+    .row2 .block input {
+        height: 20px !important;
+        line-height: 20px !important;
+    }
+    .searchBtn {
+        width: 50px;
+        height: 26px;
+        margin-left: 20px;
+        background: #3c6291;
+        color: #fff;
+        font-size: 14px;
+        line-height: 26px;
+        text-align: center;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    /* .el-input__inner {
+        height: 20px !important;
+        line-height: 20px !important;
+    } */
 </style>

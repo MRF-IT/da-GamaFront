@@ -49,7 +49,7 @@
         menuList: [
           {name: '订舱管理',hasChild: true,children:[{name: '订舱录入',route: '/home/bookingSpace/insertSpace'},{name: '订舱表格显示',route: '/home/bookingSpace/SpaceList'},{name: '订舱T量Echarts显示',route: '/home/bookingSpace/echarts'},{name: '订舱上传Excel表格',route: '/home/blank'}],isopen: false},
           {name: '疫情管理',hasChild: true,children:[{name: '2020肺炎感染调查表',route: '/home/disease/questionnaire'},{name: '公司部门自备口罩图',route: '/home/blank'}],isopen: false},
-          {name: '商务管理',hasChild: true,children:[{name: '商务录入',route: '/home/blank'},{name: '商务列表展示',route: '/home/blank'},{name: '商务上传Excel表格页',route: '/home/blank'}],isopen: false},
+          {name: '商务管理',hasChild: true,children:[{name: '商务录入',route: '/home/commerce/insertCommerce'},{name: '商务列表展示',route: '/home/blank'},{name: '商务上传Excel表格页',route: '/home/blank'}],isopen: false},
           {name: '通讯管理',hasChild: true,children:[{name: '通讯录Excel表格页',route: '/home/blank'},{name: '邮箱Excel表格页',route: '/home/blank'}],isopen: false},
           {name: '商务FMS 管理',hasChild: true,children:[{name: '商务FMS上传Excel表格页',route: '/home/blank'},{name: '商务FMS列表',route: '/home/blank'}],isopen: false},
           {name: '密码管理',hasChild: true,children:[{name: '更改嘉泽邮箱密码',route: '/home/blank'}],isopen: false}
@@ -214,7 +214,8 @@
     align-items: center;
     height: 40px;
     padding-left: 20px;
-    border-bottom: 1px solid #E1E5E6;
+    /* border-bottom: 1px solid #E1E5E6; */
+    box-shadow:0px 2px 4px 4px rgba(0,0,0,0.04);
   }
   ::-webkit-scrollbar {display:none}
 </style>

@@ -8,7 +8,8 @@ import Blank from '@/components/blank.vue'
 import SpaceList from '@/components/bookingSpace/SpaceList'
 import Echarts from '@/components/bookingSpace/Echarts'
 import Questionnaire from '@/components/disease/Questionnaire'
-import axios from 'axios'
+// 商务管理页面
+import InsertCommerce from '@/components/commerce/InsertCommerce.vue'
 
 // 配置公共路径
 // 配置好公共路径后, 每次使用 axios 发送请求, 只需要写当前接口的路径(比如: /users) 就可以了
@@ -29,7 +30,9 @@ const router = new Router({
         {path: 'bookingSpace/spaceList',component: SpaceList},
         {path: 'blank',component: Blank},
         {path: 'bookingSpace/echarts',component: Echarts},
-        {path: 'disease/questionnaire',component: Questionnaire}
+        {path: 'disease/questionnaire',component: Questionnaire},
+        // 商务管理
+        {path: 'commerce/insertCommerce',component: InsertCommerce}
       ]
     },
     {
@@ -51,6 +54,9 @@ router.beforeEach((to, from, next) => {
     // bus.$emit('breadcrumb',['订舱管理','订舱录入'])
     localStorage.setItem('breadcrumb0','订舱管理')
     localStorage.setItem('breadcrumb1','订舱录入')
+  }else if(to.path == '/home/commerce/insertCommerce') {
+    localStorage.setItem('breadcrumb0','商务管理')
+    localStorage.setItem('breadcrumb1','商务录入')
   }
   
   next()

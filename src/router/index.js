@@ -10,6 +10,9 @@ import Echarts from '@/components/bookingSpace/Echarts'
 import Questionnaire from '@/components/disease/Questionnaire'
 // 商务管理页面
 import InsertCommerce from '@/components/commerce/InsertCommerce.vue'
+import CommerceShow from '@/components/commerce/CommerceShow.vue'
+// 密码管理
+import Jiaze from '@/components/password/Jiaze'
 
 // 配置公共路径
 // 配置好公共路径后, 每次使用 axios 发送请求, 只需要写当前接口的路径(比如: /users) 就可以了
@@ -32,7 +35,10 @@ const router = new Router({
         {path: 'bookingSpace/echarts',component: Echarts},
         {path: 'disease/questionnaire',component: Questionnaire},
         // 商务管理
-        {path: 'commerce/insertCommerce',component: InsertCommerce}
+        {path: 'commerce/insertCommerce',component: InsertCommerce},
+        {path: 'commerce/commerceShow',component: CommerceShow},
+        // 密码管理
+        {path: 'password/jiaze',component: Jiaze}
       ]
     },
     {
@@ -48,7 +54,7 @@ const router = new Router({
 // 因为所有的路由，都会经过该导航守卫，所以，就可以在这个导航守卫的回调函数中
 // 判断有没有登录了
 router.beforeEach((to, from, next) => {
-  console.log(to.path)
+  // console.log(to.path)
   if(to.path == '/home/bookingSpace/insertSpace') {
     // console.log('订舱录入')
     // bus.$emit('breadcrumb',['订舱管理','订舱录入'])

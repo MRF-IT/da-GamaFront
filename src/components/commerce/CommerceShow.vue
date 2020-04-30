@@ -1,48 +1,6 @@
 <template>
 <div class="wrapBox">
-    <div class="searchBox">
-        <div class="typeBtn" @click="searchTypeChange">{{typeText}}</div>
-        <el-row>
-            <el-col :md="8" :sm="10" :xs="20" class="searchCol" v-if="searchType">
-                <span class="condition">ETD时间：</span>
-                <el-date-picker v-model="startday" type="date" placeholder="选择日期" style="width:100%"></el-date-picker>
-            </el-col>
-            <el-col :md="8" :sm="10" :xs="20" class="searchCol" v-if="!searchType">
-                <span class="condition">录入时间：</span>
-                <el-date-picker v-model="startday" type="date" placeholder="选择日期" style="width:100%"></el-date-picker>
-            </el-col>
-            <el-col :md="8" :sm="10" :xs="20" class="searchCol">
-                <span class="condition">离港时间：</span>
-                <el-date-picker v-model="endday" type="date" placeholder="选择日期" style="width:100%"></el-date-picker>
-            </el-col>
-            <el-col  :md="8" :sm="10" :xs="20" class="searchCol">
-                <span class="condition">部门:</span>
-                <input type="text" class="searchInput" v-model="bookdepart">
-            </el-col>
-            <el-col  :md="8" :sm="10" :xs="20" class="searchCol" v-if="!searchType">
-                <span class="condition">船东:</span>
-                <input type="text" class="searchInput" v-model="bookship">
-            </el-col>
-            <el-col  :md="8" :sm="10" :xs="20" class="searchCol" v-if="!searchType">
-                <span class="condition">订舱方:</span>
-                <input type="text" class="searchInput" v-model="bookside">
-            </el-col>
-            <el-col  :md="8" :sm="10" :xs="20" class="searchCol" v-if="searchType">
-                <span class="condition">订舱号:</span>
-                <input type="text" class="searchInput">
-            </el-col>
-            <el-col  :md="8" :sm="10" :xs="20" class="searchCol" v-if="searchType">
-                <span class="condition">业务编号:</span>
-                <input type="text" class="searchInput">
-            </el-col>
-            <el-col  :md="8" :sm="10" :xs="20" class="searchCol">
-                <div class="searchBtn" @click="clickSearch">搜索</div>
-            </el-col>
-        </el-row>
-    </div>
-
-
-    <el-table :data="bookList" style="width: 90%;margin: 0 auto" height="400" border>
+    <el-table :data="bookList" style="width: 90%;margin: 0 auto" height="500" border>
         <el-table-column prop="bookid" label="编号" width="100" fixed> </el-table-column>
         <el-table-column prop="bookclerk" label="订舱员" width="100"> </el-table-column>
         <el-table-column prop="bookdate" label="日期" width="100"> </el-table-column>
@@ -77,10 +35,6 @@
     </el-table>
     <!-- 分页 -->
     <div class="footer">
-        <div class="TBox">
-            <div>T量:</div>
-            <div class="TNumber">{{sumtue}}</div>
-        </div>
         <el-pagination class="pagination"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
@@ -233,7 +187,6 @@
 export default {
     data() {
         return {
-            searchType: true,
             // typeFont: '按ETD、订舱号、业务编号搜索',
             // 订舱修改表单数据
             bookEditData: {
@@ -321,39 +274,22 @@ export default {
             currentPage: 1, // 当前页码
             total: 0, // 总数
             limit: 10, // 每页显示条数
-            sumtue: 0, // T量
-            startday: '', // 录入日期
-            endday: '', // 离港日期
-            bookship: '',// 船东
-            bookdepart: '',// 部门
-            bookside: '',// 订舱方
         }
     },
     computed: {
-        typeText() {
-            if(this.searchType) {
-                return '按录入时间、船东、订舱方搜索'
-            }else {
-                return '按ETD、业务编号、订舱号搜索'
-            }
-        }
+        
     },
     created() {
-        this.getBookList()
+        this.getCommerceList()
         console.log('date:',new Date(158636160).toLocaleString())
     },
     methods: {
         // 获取订舱列表
-        getBookList() { 
+        getCommerceList() { 
             // 查询条件
             var obj = {
                 current: this.currentPage,
-                limit: this.limit,
-                startday: this.startday,
-                endday: this.endday,
-                bookdepart: this.bookdepart,
-                bookship: this.bookship,
-                bookside: this.bookside
+                limit: this.limit
             }
             this.$http.post('/index/search/index.html',obj).then( res => {
                 
@@ -368,26 +304,18 @@ export default {
         transformDate(date) {
             return new Date(date)
         },
-        // 点击搜索时
-        clickSearch() {
-            this.getBookList()
-        },
-        // 当搜索类型改变时
-        searchTypeChange() {
-            this.searchType = !this.searchType
-        },
         // 当每页显示条数改变时
         handleSizeChange(val) {
             // console.log(`每页 ${val} 条`);
             this.limit = val
             this.currentPage = 1
-            this.getBookList()
+            this.getCommerceList()
         },
         // 当前页码改变
         handleCurrentChange(val) {
             // console.log(`当前页: ${val}`);
             this.currentPage = val
-            this.getBookList()
+            this.getCommerceList()
         },
         //   点击删除
         delList(id) {
@@ -408,10 +336,10 @@ export default {
         },
         // 点击编辑后触发
         showBookEditDailog(bookInfo) {
-            for (const key in this.bookEditData) {
-                this.bookEditData[key] = bookInfo[key]
-            }
-            this.bookEditDialog = true
+            // for (const key in this.bookEditData) {
+            //     this.bookEditData[key] = bookInfo[key]
+            // }
+            // this.bookEditDialog = true
         },
         // 关闭订舱编辑对话框
         closeBookEditDialog() {
@@ -434,13 +362,6 @@ export default {
 </script>
 
 <style scoped>
-    /* .wrapBox {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: 100%;
-        overflow: auto
-    } */
     .tableWrap {
         width: 90%;
         height: 400px;
@@ -479,50 +400,7 @@ export default {
     .deal {
         min-width: 120px !important;
         width: 120px !important;
-    }  
-    .tr > div {
-        min-width: 100px;
-        width: 100px;
-        border-bottom: 1px solid #e1e5e6;
-        border-left: 1px solid #e1e5e6;
-        font-family: "微软雅黑";
-        font-size: 12px;
-        white-space: wrap;
     }
-    .condition {
-        color: #333;
-        font-size: 12px;
-        margin-left: 40px;
-        width: 60px;
-        min-width: 60px;
-    }
-    .searchBox {
-        width: 90%;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding:0 20px;
-    }
-    /* .searchCol:first-child {
-        margin-top: 20px;
-    } */
-    .searchCol {
-        margin-bottom: 20px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-    .searchInput {
-        /* width: 100px; */
-        min-width: 20px !important;
-        flex: 1;
-        height: 20px !important;
-        border: 1px solid #DCDFE6;
-        border-radius: 5px;
-        text-indent: 1em;
-    }
-
     .pagination {
         float: right;
         /* margin-right: 40px; */
@@ -557,48 +435,6 @@ export default {
     }
     .el-form-item .el-form-item {
         margin-bottom: 20px;
-    }
-    .row2 {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        color: #333;
-        font-size: 12px;
-    }
-    .row2 .block {
-        margin-left: 20px;
-    }
-    .row2 .block input {
-        height: 20px !important;
-        line-height: 20px !important;
-    }
-    .searchBtn {
-        width: 50px;
-        height: 26px;
-        margin-left: 40px;
-        background: #3c6291;
-        color: #fff;
-        font-size: 14px;
-        line-height: 26px;
-        text-align: center;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    .typeBtn {
-        width: 84px;
-        min-width: 84px;
-        margin-top: -20px;
-        /* height: 80px; */
-        background: #3c6291;
-        color: #fff;
-        line-height: 1.5em;
-        padding: 10px;
-        font-size: 14px;
-        border-radius: 5px;
-        overflow: hidden;
-        white-space: normal;
-        word-wrap: break-all;
-        cursor: pointer;
     }
     .el-dialog__body {
         padding: 0 !important;

@@ -13,6 +13,10 @@ body {
   box-sizing: border-box;
   font-family: "微软雅黑";
 }
+.mainBg {
+  background: #3c6291 !important;
+  color: #fff !important;
+}
 .wrapBox {
   width: 100%;
   height: 100%;
@@ -80,5 +84,9 @@ body {
 }
 .searchCol .el-input__icon {
   line-height: 24px !important;
+}
+/* 弹框 */
+.el-dialog__body {
+  padding: 0 !important;
 }
 

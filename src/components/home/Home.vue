@@ -1,7 +1,7 @@
 <template>
     <div class="section">
       <!-- 侧边栏导航 -->
-      <div class="aside">
+      <div class="aside mainBg">
         <div class="asideTop">
           <img src="../../assets/logo.png">
           <div class="companyName">深圳市泰博国际货运代理有限公司</div>
@@ -16,7 +16,7 @@
             <!-- <transition name="fade"> -->
             <el-collapse-transition>
               <div class="menuItem" :class="[item.isopen ? '':'hide']" v-show="item.hasChild">
-                <div class="item" :class="[checkSelected(index,index1) ? 'selected' : '']" v-for="(item1,index1) in item.children" :key="index1" @click="routeJump(item1.route,index,index1)">{{item1.name}}</div>
+                <div class="asideItem" :class="[checkSelected(index,index1) ? 'mainColor' : '']" v-for="(item1,index1) in item.children" :key="index1" @click="routeJump(item1.route,index,index1)">{{item1.name}}</div>
               </div>
             </el-collapse-transition>
             <!-- </transition> -->
@@ -49,7 +49,7 @@
         breadcrumb:[],//面包屑数据
         // 侧边菜单栏数据
         menuList: [
-          {name: '订舱管理',hasChild: true,children:[{name: '订舱录入',route: '/home/bookingSpace/insertSpace'},{name: '订舱表格显示',route: '/home/bookingSpace/SpaceList'},{name: '订舱T量Echarts显示',route: '/home/bookingSpace/echarts'},{name: '订舱上传Excel表格',route: '/home/blank'}],isopen: false},
+          {name: '订舱管理',hasChild: true,children:[{name: '订舱录入',route: '/home/bookingSpace/insertSpace'},{name: '订舱表格显示',route: '/home/bookingSpace/SpaceList'},{name: '订舱T量Echarts显示',route: '/home/bookingSpace/echarts'}],isopen: false},
           {name: '疫情管理',hasChild: true,children:[{name: '2020肺炎感染调查表',route: '/home/disease/questionnaire'},{name: '公司部门自备口罩图',route: '/home/blank'}],isopen: false},
           {name: '商务FMS管理',hasChild: true,children:[{name: '商务录入',route: '/home/commerce/insertCommerce'},{name: '商务列表展示',route: '/home/commerce/commerceShow'},{name: '商务上传Excel表格页',route: '/home/blank'}],isopen: false},
           {name: '通讯管理',hasChild: true,children:[{name: '通讯录Excel表格页',route: '/home/blank'},{name: '邮箱Excel表格页',route: '/home/blank'}],isopen: false},
@@ -128,8 +128,6 @@
     /* overflow: auto; */
     border-right: 1px solid #e1e5e6;
     text-align: center;
-    background:#3c6291;
-    color: #fff;
   }
   .asideTop {
     padding-bottom: 20px;
@@ -183,10 +181,7 @@
     font-size: 14px;
     cursor: pointer;
   }
-  .selected {
-    color: #3C6291 !important;
-  }
-  .item {
+  .asideItem {
     height: 60px;
     line-height: 60px;
     font-size: 14px;
@@ -195,9 +190,7 @@
     /* font-weight: bold; */
     text-align: left;
     text-indent: 1.5em;
-  }
-  .item:hover {
-    color: #3c6291
+    cursor: pointer;
   }
   .hide {
     display: none;

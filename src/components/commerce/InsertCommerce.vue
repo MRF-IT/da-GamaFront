@@ -137,10 +137,10 @@
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-col> -->
         </el-form-item>
-        <el-form-item class="button">
-          <el-button type="primary" @click="submitForm('ruleForm')">确认录入</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
+        <div class="buttons">
+          <div class="button button-ensure" @click="submitForm('ruleForm')">确认录入</div>
+          <div @click="resetForm('ruleForm')" class="button button-reset">重置</div>
+        </div>
       </el-form>
     <!-- </div> -->
     <!-- <breadcrumb :breadcrumb="['订舱管理','录入订舱']"></breadcrumb> -->
@@ -264,6 +264,8 @@
           if (valid) {
             // alert('submit!');
             // console.log('ruleForm:',this.ruleForm);
+            // console.log('etdtime:',this.formData.etdtime)
+            this.formData.etdtime = this.changeDate(this.formData.etdtime)
             this.$http.post('/index/add/indextrade',this.formData).then(res => {
               if(res.status == 200 && res.data.ret == 200) {
                 this.resetForm('ruleForm')
@@ -290,6 +292,9 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      changeDate(str) {
+        return str.getFullYear()+'-'+(str.getMonth()+1)+'-'+str.getDate()
       }
     }
   }
@@ -301,24 +306,13 @@
     height: 100%;
     overflow: auto
   }
-  .el-button--primary {
-    color: #FFF;
-    background-color: #3C6291;
-    border-color: #3C6291;
-  }
-  /* .el-button--primary:hover {
-
-  } */
-  .el-button--default:hover{
-    color: #3C6291;
-  }
-  .button {
+  .buttons {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
   }
-  .el-button {
+  .button {
     width: 100px;
     height: 40px;
     line-height: 40px;

@@ -1,3 +1,6 @@
+
+// #ff6827  #3C6291
+@mainColor: #3C6291;
 html,
 body {
   height: 100%;
@@ -15,8 +18,14 @@ body {
 }
 /* ff6827  3c6291 */
 .mainBg {
-  background: #3c6291 !important;
+  background: @mainColor !important;
   color: #fff !important;
+}
+.mainColor {
+  color: @mainColor !important;
+}
+.asideItem:hover {
+  color: @mainColor !important;
 }
 .wrapBox {
   width: 100%;
@@ -31,11 +40,11 @@ body {
   margin-right: 6px !important;
 }
 .el-pager li.active {
-  background: #3c6291 !important;
+  background: @mainColor !important;
   color: #fff !important;
 }
 .el-pager li:hover {
-  color: #3c6291 !important;
+  color: @mainColor !important;
 }
 .el-pager li.active:hover {
   color: #fff !important;
@@ -44,11 +53,11 @@ body {
   margin-left: 50px !important;
 }
 .el-radio__input.is-checked .el-radio__inner {
-  border-color: #3c6291 !important;
-  background: #3c6291 !important;
+  border-color: @mainColor !important;
+  background: @mainColor !important;
 }
 .el-radio__input.is-checked+.el-radio__label {
-  color: #3c6291 !important;
+  color: @mainColor !important;
 }
 /* .el-button--primary {
   color: #FFF;
@@ -69,7 +78,7 @@ body {
   cursor: pointer;
 }
 .button-ensure {
-  background: #3c6291;
+  background: @mainColor;
   color: #fff;
   margin-right: 10px;
 }
@@ -80,12 +89,12 @@ body {
   margin-left: 10px;
 }
 .button-reset:hover {
-  color: #3c6291;
-  border: 1px solid #3c6291;
+  color: @mainColor;
+  border: 1px solid @mainColor;
 }
 .el-table thead tr th{
   color: #fff;
-  background: #3c6291;
+  background: @mainColor;
   text-align: center;
   padding: 10px 0;
 }

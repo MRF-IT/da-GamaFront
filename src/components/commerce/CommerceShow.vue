@@ -369,70 +369,12 @@ export default {
         overflow: auto;
         border: 1px solid #333;
     }
-    .thead {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        line-height: 40px;
-        font-size: 14px;
-        color: #fff;
-        /* overflow: auto */
-    }
-    .tr {
-        display: flex;
-        flex-direction: row;
-        border-top: 1px solid #e1e5e6;
-        /* border-right: 1px solid #e1e5e6; */
-        align-items: center;
-        line-height: 34px;
-        font-size: 14px;
-        /* overflow: auto */
-    }
-    .thead div {
-        min-width: 100px;
-        width: 100px;
-        text-align: center;
-        font-family: "微软雅黑";
-        font-weight: bold;
-        background: #3c6291;
-        border-right: 1px solid #e1e5e6;
-    }
-    .deal {
-        min-width: 120px !important;
-        width: 120px !important;
-    }
     .pagination {
         float: right;
         /* margin-right: 40px; */
         padding-bottom: 70px;
     }
-    .tr .deal {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-around;
-        height: 34px;
-    }
-    .deal div {
-        width: 46px;
-        height: 20px;
-        line-height: 20px;
-        text-align: center;
-        border-radius: 4px;
-        color: #fff;
-        font-size: 12px;
-        cursor: pointer;
-    }
-    .deal div:hover {
-        opacity: 0.9;
-        /* background: rgba(255,255,255,0.8) */
-    }
-    .deal .alter {
-        background: #3c6291;
-    }
-    .deal .del{
-        background: #FF3000;
-    }
+    
     .el-form-item .el-form-item {
         margin-bottom: 20px;
     }

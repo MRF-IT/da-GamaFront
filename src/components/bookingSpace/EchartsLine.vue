@@ -1,6 +1,6 @@
 <template>
     <div class="wrapBox">
-        <div class="selectType mainBg" @click="clickLine">折线图</div>
+        <div class="selectType mainBg" @click="clickLine">柱形图</div>
         <div class="searchBox">
             <div>ETD起始日期:</div>
             <el-date-picker v-model="startDate" type="date" placeholder="选择日期" class="selectDate"></el-date-picker>
@@ -39,31 +39,44 @@ export default {
         return {
             startDate: '',
             endDate: '',
-            barData: [],
-            title: ['','','']
+            lineData: [],
+            title: ['','',''],
+            seriesData: []
         }
     },
     created() {
-        this.getBarData()
+        this.getLineData()
     },
     mounted() {
         
     },
     watch: {
-        barData(newVaule,oldValue) {
+        lineData(newVaule,oldValue) {
             // console.log('')
             if(newVaule.length!==0) {
-                this.$set(this.title,0,this.barData[0].title)
-                this.$set(this.title,1,this.barData[1].title)
-                this.$set(this.title,2,this.barData[1].title)
-                // this.title[0] = this.barData[0].title
-                // console.log(this.barData[0].title)
+                newVaule.forEach((item,index) => {
+                    this.$set(this.seriesData,index,[])
+                    item.datas.forEach((item1,index1) => {
+                        this.seriesData[index].push({
+                            name: item.shiparray[index1],
+                            type: 'line',
+                            data: item1
+                        })
+                    })
+                    
+                });
+                // console.log(this.seriesData)
+                this.$set(this.title,0,this.lineData[0].title)
+                this.$set(this.title,1,this.lineData[1].title)
+                this.$set(this.title,2,this.lineData[1].title)
+                // this.title[0] = this.lineData[0].title
+                // console.log(this.lineData[0].title)
                 var echart1 = document.getElementById('shipowner')
                 var echart2 = document.getElementById('businessman')
                 var echart3 = document.getElementById('businessmanager')
-                this.drawEcharts(echart1,this.barData[0])
-                this.drawEcharts(echart2,this.barData[1])
-                this.drawEcharts(echart3,this.barData[2])
+                this.drawEcharts(echart1,this.lineData[0],this.seriesData[0])
+                this.drawEcharts(echart2,this.lineData[1],this.seriesData[1])
+                this.drawEcharts(echart3,this.lineData[2],this.seriesData[2])
             }
         }
     },
@@ -71,32 +84,27 @@ export default {
         // 点击搜索触发
         clickSearch() {
             if((!this.startDate)&&(this.endDate)) {
-                // console.log('1:',this.startDate,this.endDate)
                 this.$message({
                     message: '请选择起始日期',
                     type: 'warning'
                 });
                 return
             }
-            // console.log((this.startDate))
-            // console.log(!this.endDAte)
-            // console.log((this.startDate)&&(!this.endDAte))
             if((this.startDate)&&(!this.endDate)) {
-                // console.log('1:',this.startDate,this.endDate)
                 this.$message({
                     message: '请选择结束日期',
                     type: 'warning'
                 });
                 return
             }
-            this.getBarData()
+            this.getLineData()
         },
         // 点击折线图按钮时跳转
         clickLine() {
-            this.$router.push('/home/bookingSpace/echartsLine')
+            this.$router.push('/home/bookingSpace/echarts')
         },
         // 获取柱状图数据
-        async getBarData() {
+        async getLineData() {
             var startday = this.startDate
             var endday = this.endDate 
             if(this.startDate != '') {
@@ -109,10 +117,10 @@ export default {
                 startday: startday,
                 endday: endday
             }
-            const res = await this.$http.post('http://192.168.53.132/tp5seawatch/public/index/echarts/index.html',obj)
+            const res = await this.$http.post('http://192.168.53.132/tp5seawatch/public/index/tuxing/index.html',obj)
             if(res.status == 200 && res.data.ret == 200) {
-                this.barData = res.data.data
-                console.log(this.barData)
+                this.lineData = res.data.data
+                // console.log(this.lineData)
             }else {
                 this.$message({
                     message: '获取数据失败',
@@ -121,55 +129,53 @@ export default {
             }
             // console.log(res)
         },
-        drawEcharts(myChart,data) {
+        drawEcharts(myChart,data,series) {
             var option = {
                 // title: {
                 //     text: data.title
                 // },
-                color: ['#3c6291','#c23531'],
+                // color: ['#3c6291','#c23531'],
                 tooltip: {},
                 legend: {
                     // x: 'right',
                     padding: 10,
-                    data: [
-                        {name: data.titleday+'年T量'},
-                        {name: data.titledayy+'年T量'}
-                    ]
+                    data: data.shiparray
                 },
                 xAxis: {
-                    data: data.shipjs
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一', '周二', '周三', '周四', '周五','周六','周日']
                 },
                 yAxis: {},
                 toolbox: {
                     show: true,
                     feature: {
-                        dataView: {show: true, readOnly: false},
-                        magicType: {show: true, type: ['line', 'bar']},
-                        restore: {show: true},
+                        // dataView: {show: true, readOnly: false},
+                        // magicType: {show: true, type: ['line', 'bar']},
+                        // restore: {show: true},
                         saveAsImage: {show: true}
                     }
                 },
-                series: [
-                    {
-                        name: data.titleday+"年T量",  // 系列名称
-                        type: 'bar',  // 系列图表类型
-                        data: data.countjs  // 系列中的数据内容
-                    },
-                    {
-                        name: data.titledayy+"年T量",  // 系列名称
-                        type: 'bar',  // 系列图表类型
-                        data: data.countjsy  // 系列中的数据内容
-                    },
-                    {
-                        type: 'pie',
-                        radius: '20%',
-                        center: ['85%','20%'],
-                        data: [
-                            {value: data.all,name: data.titleday+'年当段时间总T量'},
-                            {value: data.ally,name: data.titledayy+'年当段时间总T量'},
-                        ]
-                    }
-                ]
+                
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                series: series
+                // series: [
+                //     {
+                //         name: data.shiparray[0]+'-',  // 系列名称
+                //         type: 'line',  // 系列图表类型
+                //         data: data.datas[0]  // 系列中的数据内容
+                //     },
+                //     // {
+                //     //     name: data.titledayy+"年T量",  // 系列名称
+                //     //     type: 'line',  // 系列图表类型
+                //     //     data: data.countjsy  // 系列中的数据内容
+                //     // },
+                // ]
             };
  
             // // 使用刚指定的配置项和数据显示图表。

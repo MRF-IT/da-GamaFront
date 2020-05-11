@@ -1,17 +1,17 @@
 <template>
 <div class="wrapBox">
-    <div class="typeBtn mainBg" @click="searchTypeChange">按ETD、业务编号和订舱号搜索</div>
+    <div class="typeBtn mainBg" @click="searchTypeChange">按录入时间、船东、订舱方搜索</div>
     <div class="searchBox">
         
         <el-row>
-            <!-- <el-col :md="8" :sm="10" :xs="20" class="searchCol" v-if="searchType">
-                <span class="condition">ETD时间：</span>
-                <el-date-picker v-model="startday" type="date" placeholder="选择日期" style="width:100%"></el-date-picker>
-            </el-col> -->
             <el-col :md="8" :sm="10" :xs="20" class="searchCol">
                 <span class="condition">起始时间：</span>
                 <el-date-picker v-model="startday" type="date" placeholder="选择日期" style="width:100%"></el-date-picker>
             </el-col>
+            <!-- <el-col :md="8" :sm="10" :xs="20" class="searchCol">
+                <span class="condition">录入时间：</span>
+                <el-date-picker v-model="startday" type="date" placeholder="选择日期" style="width:100%"></el-date-picker>
+            </el-col> -->
             <el-col :md="8" :sm="10" :xs="20" class="searchCol">
                 <span class="condition">结束时间：</span>
                 <el-date-picker v-model="endday" type="date" placeholder="选择日期" style="width:100%"></el-date-picker>
@@ -20,13 +20,21 @@
                 <span class="condition">部门:</span>
                 <input type="text" class="searchInput" v-model="bookdepart">
             </el-col>
-            <el-col  :md="8" :sm="10" :xs="20" class="searchCol">
+            <!-- <el-col  :md="8" :sm="10" :xs="20" class="searchCol">
                 <span class="condition">船东:</span>
                 <input type="text" class="searchInput" v-model="bookship">
             </el-col>
             <el-col  :md="8" :sm="10" :xs="20" class="searchCol">
                 <span class="condition">订舱方:</span>
                 <input type="text" class="searchInput" v-model="bookside">
+            </el-col> -->
+            <el-col  :md="8" :sm="10" :xs="20" class="searchCol">
+                <span class="condition">订舱号:</span>
+                <input type="text" class="searchInput" v-model="bookso">
+            </el-col>
+            <el-col  :md="8" :sm="10" :xs="20" class="searchCol">
+                <span class="condition">业务编号:</span>
+                <input type="text" class="searchInput" v-model="servicenumber">
             </el-col>
             <el-col  :md="8" :sm="10" :xs="20" class="searchCol">
                 <div class="searchBtn mainBg" @click="clickSearch">搜索</div>
@@ -35,7 +43,7 @@
     </div>
 
 
-    <el-table :data="bookList" style="max-width: 90%;margin: 0 auto" height="400" border>
+    <el-table :data="bookList" style="max-swidth: 90%;margin: 0 auto" height="400" border>
         <el-table-column prop="bookid" label="编号" width="100" fixed> </el-table-column>
         <el-table-column prop="bookclerk" label="订舱员" width="100"> </el-table-column>
         <el-table-column prop="bookdate" label="日期" width="100"> </el-table-column>
@@ -317,11 +325,11 @@ export default {
             sumtue: 0, // T量
             startday: '', // 录入日期
             endday: '', // 离港日期
-            bookship: '',// 船东
+            // bookship: '',// 船东
             bookdepart: '',// 部门
-            bookside: '',// 订舱方
-            // bookso: '',// 订舱号
-            // servicenumber: '', //业务编号
+            // bookside: '',// 订舱方
+            bookso: '',// 订舱号
+            servicenumber: '', //业务编号
         }
     },
     computed: {
@@ -340,31 +348,29 @@ export default {
     methods: {
         // 获取订舱列表
         getBookList() { 
-            // 查询条件
             var startday = this.startday
             var endday = this.endday
-            // console.log(startday,'---',endday)
-            if(startday) {
+            if(startday != '') {
                 startday = this.changeDate(this.startday)
             }
-            if(endday) {
+            if(endday != '') {
                 endday = this.changeDate(this.endday)
             }
+            // 查询条件
             var obj = {
                 current: this.currentPage,
                 limit: this.limit,
                 startday: startday,
                 endday: endday,
                 bookdepart: this.bookdepart,
-                bookship: this.bookship,
-                bookside: this.bookside
+                bookso: this.bookso,
+                servicenumber: this.servicenumber
             }
-            // console.log(obj)
-            this.$http.post('/index/search/index.html',obj).then( res => {
-                // console.log(res)
+            this.$http.post('/index/search/second',obj).then( res => {
+                
                 if(res.status === 200 && res.data.ret == 200) {
-                    // console.log('data=',res.data.data.list)
-                    this.bookList = res.data.data.list;
+                    // console.log('data=',this.changeDate(new Date(res.data.data.list[4].bookdate*1000)))
+                    this.bookList = res.data.data.list
                     this.bookList.forEach(item => {
                         if(item.bookdate) {
                             item.bookdate = this.changeDate(new Date(item.bookdate*1000))
@@ -377,17 +383,13 @@ export default {
                         }
                         
                     });
+                    // this.bookList = list;
                     this.total = res.data.data.total
                     this.sumtue = res.data.data.sumtue
-                }else {
-                    this.$message({
-                        message: '请求数据失败',
-                        type: 'warning'
-                    });
                 }
             }).catch(() => {
                 this.$message({
-                    message: '未连接到服务器，请求数据失败',
+                    message: '未连接到服务器，数据请求失败',
                     type: 'warning'
                 });
             })
@@ -412,11 +414,12 @@ export default {
                 return
             }
             this.getBookList()
+
         },
         // 当搜索类型改变时
         searchTypeChange() {
-            this.$router.push('/home/bookingSpace/etdList')
             // this.searchType = !this.searchType
+            this.$router.push('/home/bookingSpace/SpaceList')
         },
         // 当每页显示条数改变时
         handleSizeChange(val) {
@@ -432,7 +435,7 @@ export default {
             this.getBookList()
         },
         //   点击删除
-        async delList(id) {
+        delList(id) {
             this.$confirm('确认删除该条记录吗?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -488,6 +491,7 @@ export default {
         editBook() {
             this.$refs.bookEditData.validate((valid) => {
                 if (valid) {
+                    // console.log('ruleForm:',this.bookEditData);
                     var obj = this.bookEditData
                     // console.log(this.bookEditData.bookdate,this.bookEditData.bookcydate)
                     obj.bookdate = this.changeDate(obj.bookdate)
@@ -501,6 +505,11 @@ export default {
                             })
                             this.bookEditDialog = false
                             this.getBookList()
+                        }else {
+                            this.$message({
+                                message: '修改失败，请重新操作',
+                                type: 'warning'
+                            });
                         }
                         
                     }).catch(() => {
@@ -509,9 +518,8 @@ export default {
                             type: 'warning'
                         });
                     })
-                    
                 } else {
-                    
+                    // console.log('ruleForm:',this.bookEditData);
                     return false;
                 }
             });
@@ -526,7 +534,6 @@ export default {
                 return num
             }
         }
-
     },
 }
 </script>
@@ -606,6 +613,16 @@ export default {
         height: 20px !important;
         line-height: 20px !important;
     }
+    .searchBtn {
+        width: 50px;
+        height: 26px;
+        margin-left: 40px;
+        font-size: 14px;
+        line-height: 26px;
+        text-align: center;
+        border-radius: 4px;
+        cursor: pointer;
+    }
     .typeBtn {
         position: fixed;
         top: 5px;
@@ -615,16 +632,6 @@ export default {
         line-height: 30px;
         text-align: center;
         font-size: 14px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    .searchBtn {
-        width: 50px;
-        height: 26px;
-        margin-left: 40px;
-        font-size: 14px;
-        line-height: 26px;
-        text-align: center;
         border-radius: 4px;
         cursor: pointer;
     }

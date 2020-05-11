@@ -132,10 +132,10 @@
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-col> -->
         </el-form-item>
-        <el-form-item class="button">
-          <el-button type="primary" @click="submitForm('ruleForm')">确认录入</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
+        <div class="buttons">
+          <div class="button button-ensure" @click="submitForm('ruleForm')">确认录入</div>
+          <div @click="resetForm('ruleForm')" class="button button-reset">重置</div>
+        </div>
       </el-form>
     <!-- </div> -->
     <!-- <breadcrumb :breadcrumb="['订舱管理','录入订舱']"></breadcrumb> -->
@@ -251,6 +251,10 @@
           if (valid) {
             // alert('submit!');
             // console.log('ruleForm:',this.ruleForm);
+            this.ruleForm.bookdate = this.changeDate(this.ruleForm.bookdate)
+            this.ruleForm.bookcydate = this.changeDate(this.ruleForm.bookcydate)
+            // this.$set(this.ruleForm,'bookdate',this.changeDate(this.ruleForm.bookdate))
+            // this.$set(this.ruleForm,'bookcydate',this.changeDate(this.ruleForm.bookcydate))
             this.$http.post('/index/add/index',this.ruleForm).then(res => {
               if(res.status == 200 && res.data.ret == 200) {
                 this.resetForm('ruleForm')
@@ -264,6 +268,11 @@
                   type: 'warning'
                 });
               }
+            }).catch(() => {
+              this.$message({
+                message: '未连接到服务器，订舱录入失败',
+                type: 'warning'
+              });
             })
             // console.log(res)
           } else {
@@ -277,6 +286,9 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      changeDate(str) {
+        return str.getFullYear()+'-'+(str.getMonth()+1)+'-'+str.getDate()
       }
     }
   }
@@ -288,30 +300,20 @@
     height: 100%;
     overflow: auto
   }
-  .el-button--primary {
-    color: #FFF;
-    background-color: #3C6291;
-    border-color: #3C6291;
-  }
-  /* .el-button--primary:hover {
-
-  } */
-  .el-button--default:hover{
-    color: #3C6291;
-  }
-  .button {
+  .buttons {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
   }
-  .el-button {
+  .button {
     width: 100px;
     height: 40px;
     line-height: 40px;
     text-align: center;
     padding: 0;
   }
+
   .el-form {
     padding-bottom: 90px;
   }

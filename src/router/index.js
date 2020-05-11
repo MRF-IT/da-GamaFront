@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import  bus from '@/components/bus.js'
-import Home2 from '@/components/home/Home2.vue'
 import Home from '@/components/home/Home.vue'
 import InsertSpace from '@/components/bookingSpace/InsertSpace.vue'
 import Blank from '@/components/blank.vue'
 import SpaceList from '@/components/bookingSpace/SpaceList'
+import EtdList from '@/components/bookingSpace/EtdList'
 import Echarts from '@/components/bookingSpace/Echarts'
+import EchartsLine from '@/components/bookingSpace/EchartsLine'
 import Questionnaire from '@/components/disease/Questionnaire'
 // 商务管理页面
 import InsertCommerce from '@/components/commerce/InsertCommerce.vue'
@@ -26,13 +27,19 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     {
+      path: '/',
+      redirect: '/home'
+    },
+    {
       path: '/home',
       component: Home,
       children: [
         {path: 'bookingSpace/insertSpace',component: InsertSpace},
         {path: 'bookingSpace/spaceList',component: SpaceList},
+        {path: 'bookingSpace/etdList',component: EtdList},
         {path: 'blank',component: Blank},
         {path: 'bookingSpace/echarts',component: Echarts},
+        {path: 'bookingSpace/echartsLine',component: EchartsLine},
         {path: 'disease/questionnaire',component: Questionnaire},
         // 商务管理
         {path: 'commerce/insertCommerce',component: InsertCommerce},
@@ -41,10 +48,6 @@ const router = new Router({
         {path: 'password/jiaze',component: Jiaze}
       ]
     },
-    {
-      path: '/home2',
-      component: Home2
-    }
   ]
 })
 
@@ -55,11 +58,16 @@ const router = new Router({
 // 判断有没有登录了
 router.beforeEach((to, from, next) => {
   // console.log(to.path)
+
   if(to.path == '/home/bookingSpace/insertSpace') {
     // console.log('订舱录入')
     // bus.$emit('breadcrumb',['订舱管理','订舱录入'])
     localStorage.setItem('breadcrumb0','订舱管理')
     localStorage.setItem('breadcrumb1','订舱录入')
+  }else if(to.path == '/home/bookingSpace/SpaceList' || to.path == '/home/bookingSpace/etdList') {
+    localStorage.setItem('breadcrumb0','订舱管理')
+    localStorage.setItem('breadcrumb1','订舱表格显示')
+    // console.log('订舱列表')
   }else if(to.path == '/home/commerce/insertCommerce') {
     localStorage.setItem('breadcrumb0','商务管理')
     localStorage.setItem('breadcrumb1','商务录入')

@@ -8,7 +8,7 @@ import axios from 'axios'
 
 // import Bus from './components/bus.js'
 // 导入全局样式
-import '@/assets/index.css'
+import '@/assets/css/index.css'
 
 // 导入elementui - js
 import ElementUI from 'element-ui'

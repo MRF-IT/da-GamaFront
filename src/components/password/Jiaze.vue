@@ -10,8 +10,8 @@
             <div class="list">
                 <div class="text">启用/禁用成员</div>
                 <div>
-                    <el-radio v-model="enable" label="1">是</el-radio>
-                    <el-radio v-model="enable" label="2">否</el-radio>
+                    <el-radio v-model="enable" label="1">启用</el-radio>
+                    <el-radio v-model="enable" label="2">禁用</el-radio>
                 </div>
             </div>
             <div class="list">

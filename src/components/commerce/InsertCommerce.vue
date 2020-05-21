@@ -275,10 +275,14 @@
                 });
               }else {
                 this.$message({
-                  message: '商务录入失败',
+                  message: '商务录入失败，请重新操作',
                   type: 'warning'
                 });
               }
+            }).catch(() => {
+              this.$message({
+                message: '未连接到服务器，数据录入失败'
+              })
             })
             // console.log(res)
           } else {

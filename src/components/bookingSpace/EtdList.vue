@@ -43,7 +43,7 @@
     </div>
 
 
-    <el-table :data="bookList" style="max-swidth: 90%;margin: 0 auto" height="400" border>
+    <el-table :data="bookList" style="max-width: 90%;margin: 0 auto" height="400" border>
         <el-table-column prop="bookid" label="编号" width="100" fixed> </el-table-column>
         <el-table-column prop="bookclerk" label="订舱员" width="100"> </el-table-column>
         <el-table-column prop="bookdate" label="日期" width="100"> </el-table-column>

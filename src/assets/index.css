@@ -103,4 +103,7 @@ body {
 .el-dialog__body {
   padding: 0 !important;
 }
+.questions .el-form-item__label {
+  color: #333 !important;
+}
 

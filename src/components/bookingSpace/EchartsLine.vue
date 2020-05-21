@@ -195,7 +195,7 @@ export default {
     .echartsTitle {
         color: #333;
         font-size: 18px;
-        margin-bottom: 20px;
+        margin:20px 0 10px;
         font-weight: bold;
     }
     .echartsBox {

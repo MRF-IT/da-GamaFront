@@ -8,12 +8,18 @@ import SpaceList from '@/components/bookingSpace/SpaceList'
 import EtdList from '@/components/bookingSpace/EtdList'
 import Echarts from '@/components/bookingSpace/Echarts'
 import EchartsLine from '@/components/bookingSpace/EchartsLine'
-import Questionnaire from '@/components/disease/Questionnaire'
+
 // 商务管理页面
 import InsertCommerce from '@/components/commerce/InsertCommerce.vue'
 import CommerceShow from '@/components/commerce/CommerceShow.vue'
+// 疫情管理
+import Questionnaire from '@/components/disease/Questionnaire'
+import DiseaseList from '@/components/disease/DiseaseList'
 // 密码管理
 import Jiaze from '@/components/password/Jiaze'
+// EDI管理
+import MbfList from '@/components/EDI/MbfList'
+import MinList from '@/components/EDI/MinList'
 
 // 配置公共路径
 // 配置好公共路径后, 每次使用 axios 发送请求, 只需要写当前接口的路径(比如: /users) 就可以了
@@ -40,12 +46,17 @@ const router = new Router({
         {path: 'blank',component: Blank},
         {path: 'bookingSpace/echarts',component: Echarts},
         {path: 'bookingSpace/echartsLine',component: EchartsLine},
+        // 疫情管理
         {path: 'disease/questionnaire',component: Questionnaire},
+        {path: 'disease/diseaseList',component: DiseaseList},
         // 商务管理
         {path: 'commerce/insertCommerce',component: InsertCommerce},
         {path: 'commerce/commerceShow',component: CommerceShow},
         // 密码管理
-        {path: 'password/jiaze',component: Jiaze}
+        {path: 'password/jiaze',component: Jiaze},
+        // edi管理
+        {path: 'edi/mbfList',component: MbfList},
+        {path: 'edi/minList',component: MinList},
       ]
     },
   ]
